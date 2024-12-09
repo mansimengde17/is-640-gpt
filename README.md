@@ -15,9 +15,7 @@ Supports autoregressive text generation with the generate method.
 
 Quick Start
 
-1. Clone the repository:
-git clone <your-repository-url>  
-cd <repository-folder>  
+1. Clone the repository: git clone <your-repository-url>  |    cd <repository-folder>  
 
 2. Install dependencies:
 Make sure you have Python 3.8+ installed, then run:
