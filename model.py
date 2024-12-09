@@ -52,3 +52,18 @@ class FeedForward(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+class Block(nn.Module):
+    """ Transformer block: communication followed by computation """
+    def __init__(self, n_embd, n_head, block_size, dropout=0.2):
+        super().__init__()
+        self.sa = MultiHeadAttention(n_embd, n_head, block_size, dropout=dropout)
+        self.ffwd = FeedForward(n_embd, dropout=dropout)
+        self.ln1 = nn.LayerNorm(n_embd)
+        self.ln2 = nn.LayerNorm(n_embd)
+
+    def forward(self, x):
+        x = x + self.sa(self.ln1(x))
+        x = x + self.ffwd(self.ln2(x))
+        return x
+
