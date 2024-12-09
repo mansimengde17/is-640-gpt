@@ -16,21 +16,24 @@ Supports autoregressive text generation with the generate method.
 Quick Start
 
 1. Clone the repository:
-git clone <your-repository-url>  
-cd <repository-folder>  
+
+# git clone <your-repository-url>  
+# cd <repository-folder>  
 
 2. Install dependencies:
 Make sure you have Python 3.8+ installed, then run:
 
-pip install torch  
+# pip install torch  
 
 3. Run the model:
 Use the following code snippet to initialize and generate text with the model:
 
-from model import GPTLanguageModel  
-import torch  
 
 # Initialize the model  
+
+ from model import GPTLanguageModel  
+ import torch  
+
 model = GPTLanguageModel(
     vocab_size=50257,   # Vocabulary size  
     block_size=256,     # Maximum sequence length  
@@ -41,11 +44,13 @@ model = GPTLanguageModel(
 )  
 
 # Generate text  
+
 start_idx = torch.tensor([[0]])  # Starting token  
 generated = model.generate(start_idx, max_new_tokens=50)  
 print("Generated Sequence:", generated)  
 
 How It Works?
+
 The GPTLanguageModel is a PyTorch implementation that consists of:
 
 1. Token Embedding Layer: Converts token indices into dense vector representations.
@@ -54,13 +59,14 @@ The GPTLanguageModel is a PyTorch implementation that consists of:
 4. Autoregressive Text Generation: Generates text one token at a time using the generate method.
 
 Customization:
+
 You can customize the model by changing parameters such as:
 
-vocab_size: Size of the vocabulary.
-block_size: Maximum sequence length.
-n_embd: Dimensionality of embedding vectors.
-n_head: Number of attention heads.
-n_layer: Number of transformer blocks.
+1. vocab_size: Size of the vocabulary.
+2. block_size: Maximum sequence length.
+3. n_embd: Dimensionality of embedding vectors.
+4. n_head: Number of attention heads.
+5. n_layer: Number of transformer blocks.
 
 
 License
