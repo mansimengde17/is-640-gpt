@@ -69,7 +69,7 @@ class Block(nn.Module):
 
 class GPTLanguageModel(nn.Module):
 
-    def __init__(self, vocab_size=50,000, n_embd=384, n_head=6, n_layer=6, block_size=256, dropout=0.2, device='cpu'):
+    def __init__(self, vocab_size=50,000, n_embd=400, n_head=6, n_layer=6, block_size=256, dropout=0.2, device='cpu'):
         super().__init__()
         self.block_size = block_size
         self.device = device
