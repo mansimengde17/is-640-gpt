@@ -8,7 +8,7 @@ if __name__ == "__main__":
     # hyperparameters
     batch_size = 32 # Increasing batch size for faster training
     block_size = 8
-    max_iters = 5000    # number of training iterations increased for better performance
+    max_iters = 5500    # number of training iterations increased for better performance
     eval_interval = 500
     eval_iters = 200
     learning_rate = 3e-4    # learning rate increased for loss reduction
