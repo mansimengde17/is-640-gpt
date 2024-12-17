@@ -16,16 +16,17 @@ from data import Data
 from model import GPTLanguageModel
 from trainer import Trainer
 
-# Hyperparameters
-batch_size = 64
-block_size = 256
-max_iters = 5000
-eval_interval = 200
-learning_rate = 3e-4
-n_embd = 384
-n_head = 6
-n_layer = 6
-dropout = 0.2
+# Hyperparameters: Define model training and architecture parameters
+batch_size = 64 ## Number of samples processed before updating model
+block_size = 256 # Length of the context window for the model
+max_iters = 5000 # Total number of training iterations
+eval_interval = 200 # Frequency of evaluation during training
+learning_rate = 3e-4 # Learning rate for the optimizer
+n_embd = 384 # Size of the token embeddings
+n_head = 6 # Number of attention heads
+n_layer = 6 # Number of transformer layers
+dropout = 0.2 # Dropout rate for regularization
+
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Load data
