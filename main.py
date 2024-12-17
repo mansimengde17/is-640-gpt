@@ -30,6 +30,9 @@ dropout = 0.2 # Dropout rate for regularization
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Load data
+# ------------------------------
+# Step 1: Data Preparation
+# ------------------------------
 data = Data('input.txt')
 train_data, val_data = data.get_splits()
 
@@ -41,6 +44,9 @@ def get_batch(split):
     return x.to(device), y.to(device)
 
 # Initialize model
+# ------------------------------
+# Step 2: Model Initialization
+# ------------------------------
 model = GPTLanguageModel(data.vocab_size, block_size, n_embd, n_layer, n_head, dropout).to(device)
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 trainer = Trainer(model, optimizer, get_batch, device)
