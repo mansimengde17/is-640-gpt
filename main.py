@@ -26,7 +26,7 @@ n_embd = 384 # Size of the token embeddings
 n_head = 6 # Number of attention heads
 n_layer = 6 # Number of transformer layers
 dropout = 0.2 # Dropout rate for regularization
-
+# Determine device: Use GPU if available, otherwise fall back to CPU
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # Load data
