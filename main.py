@@ -1,42 +1,39 @@
-
 import torch
 from data import Data
 from model import GPTLanguageModel
 from trainer import Trainer
 
-if __name__ == "__main__":
-    # hyperparameters
-    batch_size = 32 # Increasing batch size for faster training
-    block_size = 8
-    max_iters = 5500    # number of training iterations increased for better performance
-    eval_interval = 500
-    eval_iters = 200
-    learning_rate = 3e-4    # learning rate increased for loss reduction
-    n_embd = 384    # embedding dimension increased for better performance
-    n_head = 6
-    n_layer = 6
-    dropout = 0.2
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+# Hyperparameters
+batch_size = 64
+block_size = 256
+max_iters = 5000
+eval_interval = 200
+learning_rate = 3e-4
+n_embd = 384
+n_head = 6
+n_layer = 6
+dropout = 0.2
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    # load data
-    data_obj = Data(file_path='input.txt', device=device, block_size=block_size)
+# Load data
+data = Data('input.txt')
+train_data, val_data = data.get_splits()
 
-    # create model
-    model = GPTLanguageModel(
-        vocab_size=data_obj.vocab_size,
-        n_embd=n_embd, 
-        n_head=n_head, 
-        n_layer=n_layer, 
-        block_size=block_size, 
-        dropout=dropout,
-        device=device
-    ).to(device)
+def get_batch(split):
+    data_split = train_data if split == 'train' else val_data
+    ix = torch.randint(len(data_split) - block_size, (batch_size,))
+    x = torch.stack([data_split[i:i+block_size] for i in ix])
+    y = torch.stack([data_split[i+1:i+block_size+1] for i in ix])
+    return x.to(device), y.to(device)
 
-    # train model
-    trainer = Trainer(model, data_obj, max_iters=max_iters, eval_interval=eval_interval, eval_iters=eval_iters, batch_size=batch_size, learning_rate=learning_rate)
-    trainer.train()
+# Initialize model
+model = GPTLanguageModel(data.vocab_size, block_size, n_embd, n_layer, n_head, dropout).to(device)
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+trainer = Trainer(model, optimizer, get_batch, device)
 
-    # generate text
-    context = torch.zeros((1, 1), dtype=torch.long, device=device)
-    generated_ids = model.generate(context, max_new_tokens=100)
-    print(data_obj.decode(generated_ids[0].tolist()))
+# Train the model
+trainer.train(max_iters, eval_interval)
+
+# Generate text
+context = torch.zeros((1, 1), dtype=torch.long, device=device)
+print(data.decode(model.generate(context, max_new_tokens=100)[0].tolist()))
