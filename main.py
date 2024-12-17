@@ -1,3 +1,16 @@
+"""
+main.py
+
+This script orchestrates the GPT language model training and text generation process.
+It does the following accordingly:
+1. Loads input data and preprocesses it.
+2. Initializes the GPT model with specified hyperparameters.
+3. Trains the model and periodically evaluates performance.
+4. Generates new text based on the trained model.
+
+To run: Ensure the input file 'input.txt' is in the same directory or specify the path.
+"""
+
 import torch
 from data import Data
 from model import GPTLanguageModel
